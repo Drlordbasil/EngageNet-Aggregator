@@ -1,0 +1,7 @@
+Based on the provided Python code, the package requirements are as follows:
+
+- requests
+- bs4 (BeautifulSoup)
+- transformers
+- pandas
+- numpy
