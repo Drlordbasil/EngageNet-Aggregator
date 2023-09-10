@@ -42,7 +42,8 @@ class AutonomousContentAggregator:
             self.scraped_data[url] = scraped_articles
 
     def process_data(self):
-        nlp_model = AutoModelForSequenceClassification.from_pretrained('bert-base-uncased')
+        nlp_model = AutoModelForSequenceClassification.from_pretrained(
+            'bert-base-uncased')
         tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
 
         for website, articles in self.scraped_data.items():
@@ -52,7 +53,8 @@ class AutonomousContentAggregator:
                 title = article.title
                 content = article.content
 
-                inputs = tokenizer(title + ' ' + content, return_tensors='pt', truncation=True, padding=True)
+                inputs = tokenizer(
+                    title + ' ' + content, return_tensors='pt', truncation=True, padding=True)
 
                 outputs = nlp_model(**inputs)
 
@@ -72,13 +74,15 @@ class AutonomousContentAggregator:
         recommendation_model = CustomRecommendationModel()
 
         for website, articles in self.processed_data.items():
-            recommendations = recommendation_model.generate_recommendations(articles, self.user_preferences)
+            recommendations = recommendation_model.generate_recommendations(
+                articles, self.user_preferences)
             self.recommendations[website] = recommendations
 
     def generate_content(self):
         content_model = CustomContentModel()
 
-        generated_content = content_model.generate_content(self.processed_data, self.user_preferences)
+        generated_content = content_model.generate_content(
+            self.processed_data, self.user_preferences)
         return generated_content
 
     def generate_affiliate_links(self):
@@ -92,7 +96,8 @@ class AutonomousContentAggregator:
         return affiliate_links
 
     def continuously_improve(self):
-        self.user_preferences['topic'] = random.choice(['technology', 'health', 'sports'])
+        self.user_preferences['topic'] = random.choice(
+            ['technology', 'health', 'sports'])
 
     def deploy_on_cloud(self):
         self.save_data()
@@ -142,7 +147,8 @@ class CustomModel:
         recommendations = []
 
         for article in X:
-            recommendation = self.calculate_similarity(article, user_preferences)
+            recommendation = self.calculate_similarity(
+                article, user_preferences)
             recommendations.append(recommendation)
 
         return recommendations
@@ -162,7 +168,8 @@ class CustomContentModel:
         if not self.model:
             self.train_model(processed_data)
 
-        generated_content = self.model.generate(processed_data, user_preferences)
+        generated_content = self.model.generate(
+            processed_data, user_preferences)
 
         return generated_content
 
